@@ -1,20 +1,22 @@
-import type { Metadata } from "next";
+"use client";
+
 import "./globals.css";
 
 import Sidebar from "@/components/home/Sidebar";
 
-export const metadata: Metadata = {
-  title: "AI Notes Generator",
-  description: "AI-powered exam preparation platform",
-};
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const pathname = usePathname();
+
   return (
     <html lang="en">
+
       <body className="overflow-hidden">
 
         <main className="relative flex min-h-screen overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-white">
@@ -28,13 +30,15 @@ export default function RootLayout({
 
           </div>
 
-          <Sidebar />
+          {pathname !== "/login" &&
+            pathname !== "/signup" && <Sidebar />}
 
           {children}
 
         </main>
 
       </body>
+
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import Link from "next/link";
 import {
   Home,
   Sparkles,
@@ -88,38 +88,41 @@ export default function Sidebar() {
         {/* Navigation */}
         <nav className="flex flex-col gap-2 px-3">
 
-          <a href="#home" className={linkClass("home")}>
+          <Link href="#home" className={linkClass("home")}>
             <Home className="h-5 w-5" />
             Home
-          </a>
+          </Link>
 
-          <a href="#features" className={linkClass("features")}>
+          <Link href="#features" className={linkClass("features")}>
             <Sparkles className="h-5 w-5" />
             Features
-          </a>
+          </Link>
 
-          <a href="#workflow" className={linkClass("workflow")}>
+          <Link href="#workflow" className={linkClass("workflow")}>
             <Rocket className="h-5 w-5" />
             Workflow
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/login"
             className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-zinc-300 transition hover:bg-black/20 hover:text-white"
           >
             <LogIn className="h-5 w-5" />
             Login
-          </a>
+          </Link>
 
         </nav>
 
         {/* CTA */}
         <div className="mt-auto p-4">
 
-          <button className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700">
-            <Rocket className="h-4 w-4" />
-            Get Started
-          </button>
+          <Link
+  href="/signup"
+  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
+>
+  <Rocket className="h-4 w-4" />
+  Get Started
+</Link>
 
         </div>
 
