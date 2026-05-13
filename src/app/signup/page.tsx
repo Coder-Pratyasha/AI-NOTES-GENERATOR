@@ -1,4 +1,13 @@
+"use client";
+
+import { useState } from "react";
+
+import { useSignUp } from "@clerk/nextjs";
+
+import { useRouter } from "next/navigation";
+
 import { FcGoogle } from "react-icons/fc";
+
 import Link from "next/link";
 
 import {
@@ -11,15 +20,69 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import {
-  User,
   Mail,
   LockKeyhole,
 } from "lucide-react";
 
 export default function SignupPage() {
+
+  const signUp = useSignUp();
+
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (
+    e: React.FormEvent
+  ) => {
+
+    e.preventDefault();
+
+    try {
+
+      setLoading(true);
+
+      const result =
+        await signUp.signUp?.create({
+          emailAddress: email,
+          password,
+        });
+
+      await result?.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+
+      alert(
+        "Verification code sent to your email"
+      );
+
+      router.push("/verify");
+
+    } catch (err: any) {
+
+      console.log(err);
+
+      alert(
+        err.errors?.[0]?.message ||
+        "Something went wrong"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
   return (
-   <div className="fixed inset-0 z-50 flex items-center justify-center text-white">
-   
+
+    <div className="fixed inset-0 z-50 flex items-center justify-center text-white">
+
       {/* Tech Lines */}
       <div className="absolute inset-0 opacity-20">
 
@@ -33,7 +96,6 @@ export default function SignupPage() {
 
       </div>
 
-      {/* Signup Card */}
       <Card className="relative z-10 w-full max-w-[500px] rounded-3xl border border-white/10 bg-white/[0.04] shadow-[0_8px_50px_rgba(0,0,0,0.5)] backdrop-blur-3xl">
 
         <CardContent className="px-8 py-6">
@@ -62,20 +124,10 @@ export default function SignupPage() {
           </div>
 
           {/* Form */}
-          <form className="space-y-4">
-
-            {/* Username */}
-            <div className="relative">
-
-              <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-
-              <Input
-                type="text"
-                placeholder="Username"
-                className="h-12 rounded-xl border-white/10 bg-black/40 pl-11 text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-blue-500"
-              />
-
-            </div>
+          <form
+            className="space-y-4"
+            onSubmit={handleSignup}
+          >
 
             {/* Email */}
             <div className="relative">
@@ -85,6 +137,10 @@ export default function SignupPage() {
               <Input
                 type="email"
                 placeholder="Email address"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 className="h-12 rounded-xl border-white/10 bg-black/40 pl-11 text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-blue-500"
               />
 
@@ -98,14 +154,27 @@ export default function SignupPage() {
               <Input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
                 className="h-12 rounded-xl border-white/10 bg-black/40 pl-11 text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-blue-500"
               />
 
             </div>
 
+            {/* CAPTCHA */}
+            <div id="clerk-captcha" />
+
             {/* Signup Button */}
-            <Button className="h-12 w-full rounded-xl bg-blue-600 text-sm font-medium hover:bg-blue-500">
-              Sign Up
+            <Button
+              type="submit"
+              disabled={loading}
+              className="h-12 w-full rounded-xl bg-blue-600 text-sm font-medium hover:bg-blue-500"
+            >
+              {loading
+                ? "Creating..."
+                : "Sign Up"}
             </Button>
 
           </form>
@@ -128,9 +197,11 @@ export default function SignupPage() {
             variant="outline"
             className="h-12 w-full rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
           >
+
             <FcGoogle className="mr-3 h-5 w-5" />
 
             Continue with Google
+
           </Button>
 
           {/* Footer */}
@@ -138,8 +209,12 @@ export default function SignupPage() {
 
             Already have an account?{" "}
 
-            <Link href="/login" className="font-medium text-blue-400 hover:text-blue-300">
-             Login</Link>
+            <Link
+              href="/login"
+              className="font-medium text-blue-400 hover:text-blue-300"
+            >
+              Login
+            </Link>
 
           </div>
 

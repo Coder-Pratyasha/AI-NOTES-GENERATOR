@@ -1,4 +1,12 @@
+"use client";
+
+import { useState } from "react";
+
 import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+
+import { useSignIn } from "@clerk/nextjs";
 
 import { FcGoogle } from "react-icons/fc";
 
@@ -17,7 +25,66 @@ import {
 } from "lucide-react";
 
 export default function LoginPage() {
+
+  const signIn = useSignIn();
+
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (
+    e: React.FormEvent
+  ) => {
+
+    e.preventDefault();
+
+    try {
+
+      setLoading(true);
+
+      const result = await signIn.signIn?.create({
+        identifier: email,
+        password,
+      });
+
+      if (
+        result?.firstFactorVerification.status ===
+        "verified"
+      ) {
+
+        alert("Login successful");
+
+        router.push("/");
+
+      } else {
+
+        alert("Invalid credentials");
+
+      }
+
+    } catch (err: any) {
+
+      console.log(err);
+
+      alert(
+        err.errors?.[0]?.message ||
+        "Invalid credentials"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
   return (
+
     <div className="fixed inset-0 z-50 flex items-center justify-center text-white">
 
       {/* Tech Lines */}
@@ -62,7 +129,10 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form className="space-y-4">
+          <form
+            className="space-y-4"
+            onSubmit={handleLogin}
+          >
 
             {/* Email */}
             <div className="relative">
@@ -72,6 +142,10 @@ export default function LoginPage() {
               <Input
                 type="email"
                 placeholder="Email address"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 className="h-12 rounded-xl border-white/10 bg-black/40 pl-11 text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-blue-500"
               />
 
@@ -85,14 +159,22 @@ export default function LoginPage() {
               <Input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
                 className="h-12 rounded-xl border-white/10 bg-black/40 pl-11 text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-blue-500"
               />
 
             </div>
 
             {/* Login Button */}
-            <Button className="h-12 w-full rounded-xl bg-blue-600 text-sm font-medium hover:bg-blue-500">
-              Login
+            <Button
+              type="submit"
+              disabled={loading}
+              className="h-12 w-full rounded-xl bg-blue-600 text-sm font-medium hover:bg-blue-500"
+            >
+              {loading ? "Logging in..." : "Login"}
             </Button>
 
           </form>
@@ -115,9 +197,11 @@ export default function LoginPage() {
             variant="outline"
             className="h-12 w-full rounded-xl border-white/10 bg-white/5 text-white hover:bg-white/10"
           >
+
             <FcGoogle className="mr-3 h-5 w-5" />
 
             Continue with Google
+
           </Button>
 
           {/* Footer */}

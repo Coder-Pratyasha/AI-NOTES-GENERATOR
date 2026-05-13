@@ -2,16 +2,24 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+
 import {
   Home,
   Sparkles,
   LogIn,
   Rocket,
- BrainCircuit,
+  BrainCircuit,
 } from "lucide-react";
+
+import {
+  useUser,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Sidebar() {
   const [active, setActive] = useState("home");
+
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     const scrollContainer = document.querySelector(
@@ -25,7 +33,8 @@ export default function Sidebar() {
       const features = document.getElementById("features");
       const workflow = document.getElementById("workflow");
 
-      const scrollPosition = scrollContainer.scrollTop + 400;
+      const scrollPosition =
+        scrollContainer.scrollTop + 400;
 
       if (
         workflow &&
@@ -42,7 +51,10 @@ export default function Sidebar() {
       }
     };
 
-    scrollContainer.addEventListener("scroll", handleScroll);
+    scrollContainer.addEventListener(
+      "scroll",
+      handleScroll
+    );
 
     handleScroll();
 
@@ -63,7 +75,6 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden md:flex fixed left-0 top-0 h-screen w-72 p-4 z-50">
-
       <div className="flex flex-col w-full rounded-[32px] border border-white/10 bg-gradient-to-b from-zinc-800/80 to-zinc-900/80 backdrop-blur-xl shadow-2xl">
 
         {/* Logo */}
@@ -88,46 +99,73 @@ export default function Sidebar() {
         {/* Navigation */}
         <nav className="flex flex-col gap-2 px-3">
 
-          <Link href="#home" className={linkClass("home")}>
+          <Link
+            href="#home"
+            className={linkClass("home")}
+          >
             <Home className="h-5 w-5" />
             Home
           </Link>
 
-          <Link href="#features" className={linkClass("features")}>
+          <Link
+            href="#features"
+            className={linkClass("features")}
+          >
             <Sparkles className="h-5 w-5" />
             Features
           </Link>
 
-          <Link href="#workflow" className={linkClass("workflow")}>
+          <Link
+            href="#workflow"
+            className={linkClass("workflow")}
+          >
             <Rocket className="h-5 w-5" />
             Workflow
           </Link>
 
-          <Link
-            href="/login"
-            className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-zinc-300 transition hover:bg-black/20 hover:text-white"
-          >
-            <LogIn className="h-5 w-5" />
-            Login
-          </Link>
+          {/* Auth Section */}
+          {isSignedIn ? (
+            <div className="flex items-center justify-between rounded-2xl bg-black/20 px-4 py-3">
+              <div>
+                <p className="text-sm text-white">
+                  Logged In
+                </p>
+
+                <p className="text-xs text-zinc-400">
+                  Manage Account
+                </p>
+              </div>
+
+              <UserButton />
+            </div>
+          ) : (
+            <Link
+              href="/sign-in"
+              className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-zinc-300 transition hover:bg-black/20 hover:text-white"
+            >
+              <LogIn className="h-5 w-5" />
+              Login
+            </Link>
+          )}
 
         </nav>
 
         {/* CTA */}
         <div className="mt-auto p-4">
 
-          <Link
-  href="/signup"
-  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
->
-  <Rocket className="h-4 w-4" />
-  Get Started
-</Link>
+          {!isSignedIn && (
+            <Link
+              href="/sign-up"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
+            >
+              <Rocket className="h-4 w-4" />
+              Get Started
+            </Link>
+          )}
 
         </div>
 
       </div>
-
     </aside>
   );
 }
