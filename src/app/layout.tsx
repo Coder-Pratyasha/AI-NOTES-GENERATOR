@@ -17,7 +17,7 @@ export default function RootLayout({
 
         <AppProvider>
 
-          <main className="relative flex min-h-screen overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-white">
+          <main className="relative flex min-h-screen overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#111827] to-black text-white">
 
             {/* Background Glow */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
