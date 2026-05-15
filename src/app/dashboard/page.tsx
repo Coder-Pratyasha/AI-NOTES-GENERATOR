@@ -8,12 +8,15 @@ import Sidebar from "@/components/home/Sidebar";
 import DashboardHero from "@/components/dashboard/DashboardHero";
 import PdfUploader from "@/components/dashboard/PdfUploader";
 import QueryBox from "@/components/dashboard/QueryBox";
+import ResultSection from "@/components/dashboard/ResultSection";
 
 export default function DashboardPage() {
 
   // Store uploaded PDF
   const [uploadedFile, setUploadedFile] =
     useState<any>(null);
+
+    const [messages, setMessages] = useState([]);
 
   // Clerk user
   const { user } = useUser();
@@ -54,31 +57,13 @@ export default function DashboardPage() {
           /* After Upload */
           <div className="relative min-h-screen pb-52">
 
-            {/* AI Result Area */}
-            <div className="mx-auto max-w-5xl">
-
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-
-                <h2 className="text-2xl font-semibold">
-                  AI Response
-                </h2>
-
-                <p className="mt-6 leading-8 text-zinc-300">
-                  Your generated summaries, answers,
-                  revision notes, and AI responses
-                  will appear here after querying
-                  the uploaded PDF.
-                </p>
-
-              </div>
-
-            </div>
+            <ResultSection messages={messages} />
 
             {/* Uploaded PDF Bar */}
             <div className="fixed bottom-28 left-72 right-0 z-40 px-8">
 
-              <div className="mx-auto flex max-w-5xl items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
-
+              <div className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
+              
                 <div className="flex items-center gap-3">
 
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10 text-sm text-red-400">
@@ -108,7 +93,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Query Box */}
-            <QueryBox />
+           <QueryBox setMessages={setMessages} />
 
           </div>
 

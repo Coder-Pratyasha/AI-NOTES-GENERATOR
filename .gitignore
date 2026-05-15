@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# python ai service
+python-ai-service/venv/
+python-ai-service/__pycache__/
+python-ai-service/uploads/
+python-ai-service/chroma_db/
+# vscode
+.vscode/
+
+**/__pycache__/
+*.pyc
+.vscode/

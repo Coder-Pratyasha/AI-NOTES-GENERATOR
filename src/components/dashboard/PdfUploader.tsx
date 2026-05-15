@@ -6,26 +6,43 @@ const PdfUploader = ({
   setUploadedFile,
 }: PdfUploaderProps) => {
 
-  const handleFileChange = (event: any) => {
+  const handleFileChange = async (event: any) => {
 
-    // Get selected file
-    const file = event.target.files[0];
+  const file = event.target.files[0];
 
-    // No file selected
-    if (!file) return;
+  if (!file) return;
 
-    // Validate PDF
-    if (file.type !== "application/pdf") {
-      alert("Please upload a PDF file");
-      return;
-    }
+  if (file.type !== "application/pdf") {
+    alert("Please upload a PDF file");
+    return;
+  }
 
-    // Print file details
-    console.log(file);
+  try {
 
-    // Store uploaded file
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
     setUploadedFile(file);
-  };
+
+    alert("PDF uploaded successfully");
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Upload failed");
+  }
+};
 
   return (
     <div className="flex flex-col items-center">
