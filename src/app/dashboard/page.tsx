@@ -33,7 +33,7 @@ export default function DashboardPage() {
       <Sidebar />
 
       {/* Main Content */}
-      <main className="ml-72 min-h-screen px-10 py-12">
+      <main className="ml-72 flex h-screen flex-col overflow-hidden px-10 py-12">
 
         {/* Before Upload */}
         {!uploadedFile ? (
@@ -55,7 +55,7 @@ export default function DashboardPage() {
         ) : (
 
           /* After Upload */
-          <div className="relative min-h-screen pb-52">
+          <div className="relative flex-1 overflow-hidden">
 
             <ResultSection messages={messages} />
 

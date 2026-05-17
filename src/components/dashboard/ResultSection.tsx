@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 type ResultSectionProps = {
   messages: any[];
 };
@@ -5,46 +9,72 @@ type ResultSectionProps = {
 const ResultSection = ({
   messages,
 }: ResultSectionProps) => {
+
+  const bottomRef =
+    useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+  }, [messages]);
+
   return (
-    <div className="w-full space-y-10 pb-40">
+    <div className="hide-scrollbar h-full overflow-y-auto pb-56">
 
-      {messages.map((message, index) => (
+      <div className="mx-auto flex max-w-5xl flex-col space-y-10 py-6">
 
-        <div key={index}>
+        {messages.map(
+          (message, index) => (
 
-          {/* USER MESSAGE */}
-          {message.role === "user" && (
+            <div key={index}>
 
-            <div className="flex w-full ">
+              {/* USER MESSAGE */}
+              {message.role ===
+                "user" && (
 
-              <div className="max-w-2xl rounded-3xl bg-blue-600 px-6 py-4 text-sm text-white shadow-lg">
+                <div className="flex justify-end">
 
-                {message.content}
+                  <div className="max-w-2xl rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#2563eb]/80 via-[#1d4ed8]/70 to-[#172554]/90 px-6 py-4 text-[15px] text-white shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                  
+                    {message.content}
 
-              </div>
+                  </div>
 
-            </div>
+                </div>
+              )}
 
-          )}
+              {/* AI RESPONSE */}
+              
+    {message.role ===
+      "ai" && (
 
-          {/* AI RESPONSE */}
-          {message.role === "ai" && (
+      <div className="w-full">
 
-            <div className="w-full px-4 py-2">
+        <div className="rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 p-7 sshadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
 
-              <div className="w-full text-[16px] leading-9 text-zinc-200">
+          <div className="text-[15px] leading-9 text-zinc-200">
 
-                {message.content}
+            {message.content}
 
-              </div>
+          </div>
 
-            </div>
-
-          )}
+          
 
         </div>
 
-      ))}
+      </div>
+    )}
+
+            </div>
+          )
+        )}
+
+        <div ref={bottomRef} />
+
+      </div>
 
     </div>
   );

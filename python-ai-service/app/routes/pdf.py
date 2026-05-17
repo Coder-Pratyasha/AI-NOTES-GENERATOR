@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-
+from pydantic import BaseModel
 from app.services.pdf_reader import extract_text_from_pdf
 from app.services.chunker import chunk_text
 
@@ -9,6 +9,8 @@ from app.utils.generator import generate_answer
 
 router = APIRouter()
 
+class AskRequest(BaseModel):
+    question: str
 
 @router.get("/extract")
 def extract_pdf(filename: str):
@@ -70,9 +72,10 @@ def search_notes(query: str):
         "results": results["documents"]
     }
 
-@router.get("/ask")
-def ask_notes(query: str):
+@router.post("/ask")
+def ask_notes(data: AskRequest):
 
+    query = data.question
     query_embedding = generate_embedding(query)
 
     results = collection.query(
