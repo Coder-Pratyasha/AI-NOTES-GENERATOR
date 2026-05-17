@@ -5,6 +5,7 @@ from app.services.chunker import chunk_text
 
 from app.utils.embeddings import generate_embedding
 from app.db.chroma import collection
+from app.utils.generator import generate_answer
 
 router = APIRouter()
 
@@ -53,4 +54,49 @@ def see_vectors():
     return {
         "first_document": data["documents"][0],
         "first_embedding_sample": list(embedding[:10])
+    }
+@router.get("/search")
+def search_notes(query: str):
+
+    query_embedding = generate_embedding(query)
+
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=3
+    )
+
+    return {
+        "query": query,
+        "results": results["documents"]
+    }
+
+@router.get("/ask")
+def ask_notes(query: str):
+
+    query_embedding = generate_embedding(query)
+
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=3,
+        include=["documents", "distances"]
+    )
+
+    documents = results["documents"][0]
+    distances = results["distances"][0]
+
+    if distances[0] > 0.5:
+        return {
+            "query": query,
+            "answer": "No relevant information found in the uploaded PDF."
+        }
+
+    context = "\n".join(documents)
+
+    answer = generate_answer(context, query)
+
+    return {
+        "query": query,
+        "answer": answer,
+        "retrieved_chunks": documents,
+        "distance": distances[0]
     }
