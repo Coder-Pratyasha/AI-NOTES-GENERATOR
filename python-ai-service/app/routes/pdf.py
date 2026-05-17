@@ -11,9 +11,9 @@ router = APIRouter()
 
 
 @router.get("/extract")
-def extract_pdf():
+def extract_pdf(filename: str):
 
-    text = extract_text_from_pdf("../uploads/sample.pdf")
+    text = extract_text_from_pdf(f"../uploads/{filename}")
 
     chunks = chunk_text(text)
 
@@ -24,7 +24,7 @@ def extract_pdf():
         collection.add(
             documents=[chunk],
             embeddings=[embedding],
-            ids=[f"chunk_{index}"]
+            ids=[f"{filename}_chunk_{index}"]
         )
 
     return {
