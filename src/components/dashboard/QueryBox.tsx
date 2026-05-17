@@ -39,55 +39,80 @@ const QueryBox = ({
 
     try {
 
-      setLoading(true);
+  setLoading(true);
 
-      const response = await fetch(
-        "/api/ask",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            question: currentQuery,
-          }),
-        }
-      );
+  // Temporary Loading Message
+  const loadingMessage = {
+    role: "loading",
+  };
 
-      const data = await response.json();
+  setMessages((prev: any) => [
+    ...prev,
+    loadingMessage,
+  ]);
 
-      const aiMessage = {
-        role: "ai",
-        content:
-          data.answer ||
-          "No response generated.",
-      };
-
-      setMessages((prev: any) => [
-        ...prev,
-        aiMessage,
-      ]);
-
-    } catch (error) {
-
-      console.log(error);
-
-      const aiMessage = {
-        role: "ai",
-        content:
-          "Something went wrong while generating response.",
-      };
-
-      setMessages((prev: any) => [
-        ...prev,
-        aiMessage,
-      ]);
-
-    } finally {
-
-      setLoading(false);
+  const response = await fetch(
+    "/api/ask",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        question: currentQuery,
+      }),
     }
+  );
+
+  const data = await response.json();
+
+  // Remove Loading Message
+  setMessages((prev: any) =>
+    prev.filter(
+      (msg: any) =>
+        msg.role !== "loading"
+    )
+  );
+
+  const aiMessage = {
+    role: "ai",
+    content:
+      data.answer ||
+      "No response generated.",
+  };
+
+  setMessages((prev: any) => [
+    ...prev,
+    aiMessage,
+  ]);
+
+} catch (error) {
+
+  console.log(error);
+
+  setMessages((prev: any) =>
+    prev.filter(
+      (msg: any) =>
+        msg.role !== "loading"
+    )
+  );
+
+  const aiMessage = {
+    role: "ai",
+    content:
+      "Something went wrong while generating response.",
+  };
+
+  setMessages((prev: any) => [
+    ...prev,
+    aiMessage,
+  ]);
+
+} finally {
+
+  setLoading(false);
+}
   };
 
   return (
