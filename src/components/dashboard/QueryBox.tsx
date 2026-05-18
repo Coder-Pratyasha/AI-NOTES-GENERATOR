@@ -81,11 +81,14 @@ const QueryBox = ({
   );
 
   const aiMessage = {
-    role: "ai",
-    content:
-      data.answer ||
-      "No response generated.",
-  };
+  role: "ai",
+
+  content:
+    data.answer ||
+    "No response generated.",
+
+  question: currentQuery,
+};
 
   setMessages((prev: any) => [
     ...prev,

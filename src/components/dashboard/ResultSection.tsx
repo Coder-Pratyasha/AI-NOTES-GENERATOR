@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
+import { generatePdf } from "@/lib/generatePdf";
 import TypingText from "./TypingText";
+import { FiDownload } from "react-icons/fi";
+import { FaRegCopy } from "react-icons/fa6";
 
 type ResultSectionProps = {
   messages: any[];
@@ -58,6 +60,36 @@ const ResultSection = ({
                 <div className="w-full">
 
                   <div className="rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 p-7 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
+                  <div className="mb-5 flex items-center justify-end gap-3">
+
+                      {/* COPY BUTTON */}
+
+                      <button
+                        onClick={() =>
+                          navigator.clipboard.writeText(
+                            message.content
+                          )
+                        }
+                        className="rounded-xl border border-white/5 bg-white/[0.03] px-4 py-2 text-xs text-zinc-300 transition hover:bg-white/[0.06]"
+                      >
+                        <FaRegCopy />
+                      </button>
+
+                      {/* DOWNLOAD BUTTON */}
+
+                      <button
+                        onClick={() =>
+                          generatePdf(
+                            message.question || "No Question Available",
+                            message.content
+                          )
+                        }
+                        className="rounded-xl border border-blue-400/10 bg-blue-500/10 px-4 py-2 text-xs text-blue-200 transition hover:bg-blue-500/20"
+                      >
+                        <FiDownload />
+                      </button>
+
+                    </div>
 
                     <div className="prose prose-invert max-w-none prose-p:leading-8 prose-headings:text-white prose-strong:text-white prose-li:text-zinc-200 prose-p:text-zinc-200">
 
