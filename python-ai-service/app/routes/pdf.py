@@ -11,6 +11,7 @@ router = APIRouter()
 
 class AskRequest(BaseModel):
     question: str
+    mode: str
 
 @router.get("/extract")
 def extract_pdf(filename: str):
@@ -76,6 +77,7 @@ def search_notes(query: str):
 def ask_notes(data: AskRequest):
 
     query = data.question
+    mode = data.mode
     query_embedding = generate_embedding(query)
 
     results = collection.query(
@@ -95,7 +97,50 @@ def ask_notes(data: AskRequest):
 
     context = "\n".join(documents)
 
-    answer = generate_answer(context, query)
+    prompt_prefix = ""
+
+    if mode == "Short Notes":
+        prompt_prefix = """
+        Generate concise study notes with headings,
+        bullet points, and important concepts.
+        """
+
+    elif mode == "2 Marks":
+        prompt_prefix = """
+        Answer briefly in exam-oriented
+        2-mark format.
+        Keep answer concise.
+        """
+
+    elif mode == "5 Marks":
+        prompt_prefix = """
+        Generate a detailed exam-oriented
+        5-mark answer with explanation,
+        points, and structure.
+        """
+
+    elif mode == "Revision":
+        prompt_prefix = """
+        Generate quick revision notes with
+        only key points and formulas.
+        """
+
+    else:
+        prompt_prefix = """
+        Answer the question clearly and helpfully.
+        """
+
+    final_query = f"""
+    {prompt_prefix}
+
+    Question:
+    {query}
+    """
+
+    answer = generate_answer(
+        context,
+        final_query
+    )
 
     return {
         "query": query,

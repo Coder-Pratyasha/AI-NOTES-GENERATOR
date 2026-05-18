@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+
 import TypingText from "./TypingText";
 
 type ResultSectionProps = {
@@ -25,9 +24,10 @@ const ResultSection = ({
   }, [messages]);
 
   return (
+
     <div className="hide-scrollbar h-full overflow-y-auto pb-56">
 
-      <div className="mx-auto flex max-w-5xl flex-col space-y-10 py-6">
+      <div className="mx-auto flex max-w-5xl flex-col space-y-10 py-4">
 
         {messages.map(
           (message, index) => (
@@ -35,6 +35,7 @@ const ResultSection = ({
             <div key={index}>
 
               {/* USER MESSAGE */}
+
               {message.role ===
                 "user" && (
 
@@ -50,55 +51,54 @@ const ResultSection = ({
               )}
 
               {/* AI RESPONSE */}
-              
-    {message.role ===
-      "ai" && (
 
-      <div className="w-full">
+              {message.role ===
+                "ai" && (
 
-        <div className="rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 p-7 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
+                <div className="w-full">
 
-          <div className="prose prose-invert max-w-none prose-p:leading-8 prose-headings:text-white prose-strong:text-white prose-li:text-zinc-200 prose-p:text-zinc-200">
+                  <div className="rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 p-7 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
 
-            <TypingText
-  text={message.content}
-/>
-          </div>
+                    <div className="prose prose-invert max-w-none prose-p:leading-8 prose-headings:text-white prose-strong:text-white prose-li:text-zinc-200 prose-p:text-zinc-200">
 
-          
+                      <TypingText
+                        text={message.content}
+                      />
 
-        </div>
+                    </div>
 
-      </div>
-    )}
-    {/* LOADING MESSAGE */}
+                  </div>
 
-        {message.role ===
-          "loading" && (
+                </div>
+              )}
 
-          <div className="w-full">
+              {/* LOADING MESSAGE */}
 
-            <div className="flex w-fit items-center gap-2 rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
+              {message.role ===
+                "loading" && (
 
-              <div className="flex items-center gap-1">
+                <div className="w-full">
 
-                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300" />
+                  <div className="flex w-fit items-center gap-2 rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
 
-                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300 delay-150" />
+                    <div className="flex items-center gap-1">
 
-                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300 delay-300" />
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300" />
 
-              </div>
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300 delay-150" />
 
-              <span className="ml-2 text-sm text-zinc-400">
-                AI is thinking...
-              </span>
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-blue-300 delay-300" />
 
-            </div>
+                    </div>
 
-          </div>
-        )}
-    
+                    <span className="ml-2 text-sm text-zinc-400">
+                      AI is thinking...
+                    </span>
+
+                  </div>
+
+                </div>
+              )}
 
             </div>
           )

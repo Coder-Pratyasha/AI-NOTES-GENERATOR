@@ -17,6 +17,7 @@ export default function DashboardPage() {
     useState<any>(null);
 
     const [messages, setMessages] = useState([]);
+    const [selectedMode,setSelectedMode] =useState("Ask AI");
 
   // Clerk user
   const { user } = useUser();
@@ -57,6 +58,8 @@ export default function DashboardPage() {
           /* After Upload */
           <div className="relative flex-1 overflow-hidden">
 
+            
+
             <ResultSection messages={messages} />
 
             {/* Uploaded PDF Bar */}
@@ -93,7 +96,11 @@ export default function DashboardPage() {
             </div>
 
             {/* Query Box */}
-           <QueryBox setMessages={setMessages} />
+           <QueryBox
+  setMessages={setMessages}
+  selectedMode={selectedMode}
+  setSelectedMode={setSelectedMode}
+/>
 
           </div>
 

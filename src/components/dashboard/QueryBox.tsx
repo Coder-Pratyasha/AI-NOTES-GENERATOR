@@ -4,10 +4,14 @@ import { useState } from "react";
 
 type QueryBoxProps = {
   setMessages: any;
+  selectedMode: string;
+  setSelectedMode: any,
 };
 
 const QueryBox = ({
   setMessages,
+  selectedMode,
+  setSelectedMode,
 }: QueryBoxProps) => {
 
   const [query, setQuery] =
@@ -61,6 +65,7 @@ const QueryBox = ({
       },
       body: JSON.stringify({
         question: currentQuery,
+        mode: selectedMode,
       }),
     }
   );
@@ -136,15 +141,51 @@ const QueryBox = ({
             className="flex-1 bg-transparent text-[15px] text-zinc-100 outline-none placeholder:text-zinc-500"
           />
 
-          <button
-            onClick={handleAskAI}
-            disabled={loading}
-            className="rounded-2xl border border-blue-400/10 bg-blue-500/20 px-5 py-3 text-sm font-medium text-blue-100 transition hover:bg-blue-500/30 disabled:opacity-50"
-          >
-            {loading
-              ? "Thinking..."
-              : "Ask AI"}
-          </button>
+          <div className="flex items-center gap-3">
+
+        <select
+          value={selectedMode}
+          onChange={(e) =>
+            setSelectedMode(
+              e.target.value
+            )
+          }
+          className="rounded-2xl border border-blue-400/10 bg-[#172554]/80 px-4 py-3 text-sm text-zinc-200 outline-none backdrop-blur-xl"
+        >
+
+          <option value="Ask AI">
+            Ask AI
+          </option>
+
+          <option value="Short Notes">
+            Short Notes
+          </option>
+
+          <option value="2 Marks">
+            2 Marks
+          </option>
+
+          <option value="5 Marks">
+            5 Marks
+          </option>
+
+          <option value="Revision">
+            Revision
+          </option>
+
+        </select>
+
+        <button
+          onClick={handleAskAI}
+          disabled={loading}
+          className="rounded-2xl border border-blue-400/10 bg-blue-500/20 px-5 py-3 text-sm font-medium text-blue-100 transition hover:bg-blue-500/30 disabled:opacity-50"
+        >
+          {loading
+            ? "Thinking..."
+            : "Generate"}
+        </button>
+
+       </div>
 
         </div>
 
