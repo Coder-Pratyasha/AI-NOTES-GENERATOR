@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { connectDB } from "@/lib/mongodb";
-import { Chat } from "@/models/Chat";
+import { Message } from "@/models/Message";
 
 export async function POST(req: Request) {
   try {
@@ -9,20 +9,21 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    const { userId, title } = body;
+    const { chatId, role, content } = body;
 
-    const chat = await Chat.create({
-      userId,
-      title,
+    const message = await Message.create({
+      chatId,
+      role,
+      content,
     });
 
-    return NextResponse.json(chat);
+    return NextResponse.json(message);
 
   } catch (error) {
     console.log(error);
 
     return NextResponse.json(
-      { error: "Failed to create chat" },
+      { error: "Failed to save message" },
       { status: 500 }
     );
   }
@@ -34,21 +35,21 @@ export async function GET(req: Request) {
 
     const { searchParams } = new URL(req.url);
 
-    const userId = searchParams.get("userId");
+    const chatId = searchParams.get("chatId");
 
-    const chats = await Chat.find({
-      userId,
+    const messages = await Message.find({
+      chatId,
     }).sort({
-      updatedAt: -1,
+      createdAt: 1,
     });
 
-    return NextResponse.json(chats);
+    return NextResponse.json(messages);
 
   } catch (error) {
     console.log(error);
 
     return NextResponse.json(
-      { error: "Failed to fetch chats" },
+      { error: "Failed to fetch messages" },
       { status: 500 }
     );
   }
