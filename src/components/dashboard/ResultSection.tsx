@@ -55,7 +55,7 @@ const ResultSection = ({
               {/* AI RESPONSE */}
 
               {message.role ===
-                "ai" && (
+                "assistant" && (
 
                 <div className="w-full">
 

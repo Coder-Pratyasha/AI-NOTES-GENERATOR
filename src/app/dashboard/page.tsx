@@ -17,6 +17,9 @@ export default function DashboardPage() {
     useState<any>(null);
 
     const [messages, setMessages] = useState([]);
+
+    const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+
     const [selectedMode,setSelectedMode] =useState("Ask AI");
 
   // Clerk user
@@ -100,6 +103,9 @@ export default function DashboardPage() {
   setMessages={setMessages}
   selectedMode={selectedMode}
   setSelectedMode={setSelectedMode}
+  currentChatId={currentChatId}
+  setCurrentChatId={setCurrentChatId}
+  userId={user?.id}
 />
 
           </div>
