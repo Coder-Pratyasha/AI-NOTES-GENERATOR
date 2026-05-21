@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 import {
   Home,
   Sparkles,
@@ -16,10 +16,29 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 
-export default function Sidebar() {
-  const [active, setActive] = useState("home");
+type SidebarProps = {
+  currentChatId: string | null;
 
+  setCurrentChatId: any;
+
+  setMessages: any;
+
+  userId: string | undefined;
+
+  setUploadedFile: any;
+};
+
+export default function Sidebar({
+  currentChatId,
+  setCurrentChatId,
+  setMessages,
+  userId,
+  setUploadedFile,
+}: SidebarProps) {
+  const [active, setActive] = useState("home");
+  const [chats, setChats] = useState([]);
   const { isSignedIn } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     const scrollContainer = document.querySelector(
@@ -66,6 +85,34 @@ export default function Sidebar() {
     };
   }, []);
 
+  useEffect(() => {
+
+  if (!userId) return;
+
+  const fetchChats = async () => {
+
+    try {
+
+      const response =
+        await fetch(
+          `/api/chat?userId=${userId}`
+        );
+
+      const data =
+        await response.json();
+
+      setChats(data);
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  };
+
+  fetchChats();
+
+}, [userId]);
+
   const linkClass = (id: string) =>
     `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
       active === id
@@ -95,6 +142,36 @@ export default function Sidebar() {
           </div>
 
         </div>
+
+        <div className="px-3 pb-4">
+
+  <button
+  onClick={() => {
+
+    if (!isSignedIn) {
+
+    alert("Please login first");
+
+    return;
+  }
+
+    setCurrentChatId?.(null);
+
+    setMessages?.([]);
+
+    setUploadedFile?.(null);
+
+    router.push("/dashboard");
+  }}
+
+  className="w-full rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
+>
+
+  + New Chat
+
+</button>
+
+</div>
 
         {/* Navigation */}
         <nav className="flex flex-col gap-2 px-3">
@@ -149,6 +226,61 @@ export default function Sidebar() {
           )}
 
         </nav>
+
+        {/* CHAT HISTORY */}
+
+{isSignedIn && (
+
+  <div className="mt-6 flex-1 overflow-y-auto px-3">
+
+    <h2 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+      Recent Chats
+    </h2>
+
+    <div className="space-y-2">
+
+      {chats.map((chat: any) => (
+
+        <button
+          key={chat._id}
+
+          onClick={async () => {
+
+            setCurrentChatId(
+              chat._id
+            );
+
+            const response =
+              await fetch(
+                `/api/message?chatId=${chat._id}`
+              );
+
+            const messages =
+              await response.json();
+              console.log(messages);
+            setMessages(messages);
+          }}
+
+          className={`w-full rounded-2xl px-4 py-3 text-left text-sm transition ${
+            currentChatId ===
+            chat._id
+              ? "bg-blue-500/20 text-white"
+              : "text-zinc-400 hover:bg-black/20 hover:text-white"
+          }`}
+        >
+
+          <p className="truncate">
+            {chat.title ||
+              "New Chat"}
+          </p>
+
+        </button>
+      ))}
+
+    </div>
+
+  </div>
+)}
 
         {/* CTA */}
         <div className="mt-auto p-4">

@@ -34,14 +34,19 @@ export default function DashboardPage() {
     <div className="min-h-screen text-white">
 
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar
+        currentChatId={currentChatId}
+        setCurrentChatId={setCurrentChatId}
+        setMessages={setMessages}
+        userId={user?.id}
+        setUploadedFile={setUploadedFile}
+      />
 
       {/* Main Content */}
       <main className="ml-72 flex h-screen flex-col overflow-hidden px-10 py-12">
 
         {/* Before Upload */}
-        {!uploadedFile ? (
-
+        {!uploadedFile && messages.length === 0 ? (
           <div className="flex min-h-screen flex-col items-center justify-center">
 
             <DashboardHero name={name} />
@@ -79,7 +84,7 @@ export default function DashboardPage() {
                   <div>
 
                     <h2 className="text-sm font-medium text-white">
-                      {uploadedFile.name}
+                      {uploadedFile?.name || "Previous Chat"}
                     </h2>
 
                     <p className="text-xs text-zinc-400">
