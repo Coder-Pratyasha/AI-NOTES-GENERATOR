@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     fs.writeFileSync(filePath, buffer);
 
    const response=await fetch(
-  `http://127.0.0.1:8000/extract?filename=${encodeURIComponent(file.name)}`
+   `${process.env.NEXT_PUBLIC_API_URL}/extract?filename=${encodeURIComponent(file.name)}`
 );
 
   const data = await response.json();

@@ -12,7 +12,7 @@ export async function POST(
     const body = await req.json();
 
     const response = await fetch(
-      "http://127.0.0.1:8000/ask",
+      `${process.env.NEXT_PUBLIC_API_URL}/ask`,
       {
         method: "POST",
         headers: {
