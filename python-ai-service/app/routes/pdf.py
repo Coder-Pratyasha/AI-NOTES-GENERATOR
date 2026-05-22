@@ -1,5 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 from pydantic import BaseModel
+import tempfile
+
 from app.services.pdf_reader import extract_text_from_pdf
 from app.services.chunker import chunk_text
 
@@ -13,10 +15,24 @@ class AskRequest(BaseModel):
     question: str
     mode: str
 
-@router.get("/extract")
-def extract_pdf(filename: str):
 
-    text = extract_text_from_pdf(f"../uploads/{filename}")
+@router.post("/extract")
+async def extract_pdf(
+    file: UploadFile = File(...)
+):
+
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".pdf"
+    ) as temp_file:
+
+        content = await file.read()
+
+        temp_file.write(content)
+
+        temp_path = temp_file.name
+
+    text = extract_text_from_pdf(temp_path)
 
     chunks = chunk_text(text)
 
@@ -27,7 +43,7 @@ def extract_pdf(filename: str):
         collection.add(
             documents=[chunk],
             embeddings=[embedding],
-            ids=[f"{filename}_chunk_{index}"]
+            ids=[f"{file.filename}_chunk_{index}"]
         )
 
     return {

@@ -23,7 +23,7 @@ const PdfUploader = ({
 
     formData.append("file", file);
 
-    const response = await fetch("/api/upload", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/extract`, {
       method: "POST",
       body: formData,
     });
