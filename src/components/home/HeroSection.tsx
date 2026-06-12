@@ -61,7 +61,7 @@ export default function HeroSection() {
   }, [index]);
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center px-12 py-10">
+    <section id="home" className="relative flex min-h-screen items-center px-6 md:px-12 py-10">
 
       <div className="grid w-full items-center gap-12 lg:grid-cols-2">
 
@@ -73,23 +73,23 @@ export default function HeroSection() {
             AI-Powered Exam Preparation
           </div>
 
-          <h1 className="text-6xl font-bold leading-tight tracking-tight text-white">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight text-white">
             Turn PDFs into
             <span className="text-blue-500"> Smart AI Notes</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-zinc-400">
+          <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-zinc-400">
             Upload study materials and instantly generate
             summaries, revision notes, and exam-focused answers.
           </p>
 
-          <div className="mt-10 flex gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
 
-            <button className="rounded-2xl bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700">
+            <button className="w-full sm:w-auto rounded-2xl bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700">
               Get Started
             </button>
 
-            <button className="rounded-2xl border border-zinc-700 px-6 py-3 font-medium text-zinc-300 transition hover:bg-zinc-900/50">
+            <button className="w-full sm:w-auto rounded-2xl border border-zinc-700 px-6 py-3 font-medium text-zinc-300 transition hover:bg-zinc-900/50">
               Watch Demo
             </button>
 
@@ -100,7 +100,7 @@ export default function HeroSection() {
         {/* RIGHT AI INTERACTION */}
         <div className="relative hidden lg:flex items-center justify-center">
 
-          <div className="w-[500px] rounded-[32px] border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-2xl">
+          <div className="w-full max-w-[500px] rounded-[32px] border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-2xl">
 
             {/* Search Bar */}
             <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/20 px-5 py-4">

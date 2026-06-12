@@ -225,11 +225,11 @@ const QueryBox = ({
 
   return (
 
-    <div className="fixed bottom-0 left-72 right-0 z-50 px-8 pb-8">
+    <div className="fixed bottom-0 left-0 md:left-72 right-0 z-50 px-4 md:px-8 pb-4 md:pb-8">
 
       <div className="mx-auto max-w-5xl">
 
-        <div className="flex items-center gap-3 rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#0f172a]/95 via-[#172554]/50 to-[#0f172a]/95 px-5 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#0f172a]/95 via-[#172554]/50 to-[#0f172a]/95 px-5 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
 
           <input
             type="text"
@@ -246,7 +246,7 @@ const QueryBox = ({
             className="flex-1 bg-transparent text-[15px] text-zinc-100 outline-none placeholder:text-zinc-500"
           />
 
-          <div className="flex items-center gap-3">
+          <div className="flex w-full md:w-auto items-center gap-3">
 
             <select
               value={selectedMode}
@@ -255,7 +255,7 @@ const QueryBox = ({
                   e.target.value
                 )
               }
-              className="rounded-2xl border border-blue-400/10 bg-[#172554]/80 px-4 py-3 text-sm text-zinc-200 outline-none backdrop-blur-xl"
+              className="flex-1 md:flex-none rounded-2xl border border-blue-400/10 bg-[#172554]/80 px-4 py-3 text-sm text-zinc-200 outline-none backdrop-blur-xl"
             >
 
               <option value="Ask AI">
@@ -283,7 +283,7 @@ const QueryBox = ({
             <button
               onClick={handleAskAI}
               disabled={loading}
-              className="rounded-2xl border border-blue-400/10 bg-blue-500/20 px-5 py-3 text-sm font-medium text-blue-100 transition hover:bg-blue-500/30 disabled:opacity-50"
+              className="flex-1 md:flex-none rounded-2xl border border-blue-400/10 bg-blue-500/20 px-5 py-3 text-sm font-medium text-blue-100 transition hover:bg-blue-500/30 disabled:opacity-50"
             >
               {loading
                 ? "Thinking..."

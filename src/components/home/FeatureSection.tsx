@@ -6,7 +6,7 @@ import {
 
 export default function FeatureSection() {
   return (
-    <section id="features" className="relative px-12 py-16">
+    <section id="features" className="relative px-6 md:px-12 py-16">
 
       {/* Heading */}
       <div className="mx-auto mb-10 max-w-3xl text-center">
@@ -15,13 +15,13 @@ export default function FeatureSection() {
           Features
         </p>
 
-        <h2 className="text-6xl font-bold leading-tight tracking-tight text-white">
+        <h2 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight text-white">
           Study smarter
           <br />
           with AI-powered workflows
         </h2>
 
-        <p className="mt-6 text-lg leading-relaxed text-zinc-400">
+        <p className="mt-6 text-base md:text-lg leading-relaxed text-zinc-400">
           Upload notes, generate exam-focused answers,
           and organize revision material instantly.
         </p>
@@ -32,7 +32,7 @@ export default function FeatureSection() {
       <div className="grid gap-6 lg:grid-cols-2">
 
         {/* Card 1 */}
-        <div className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-black/40 p-10 backdrop-blur-xl">
+        <div className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-black/40 p-6 md:p-10 backdrop-blur-xl">
 
           {/* Glow */}
           <div className="absolute -bottom-20 left-0 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl transition duration-500 group-hover:scale-125" />
@@ -45,7 +45,7 @@ export default function FeatureSection() {
 
             </div>
 
-            <h3 className="text-3xl font-semibold text-white">
+            <h3 className="text-2xl md:text-3xl font-semibold text-white">
               Upload PDFs
             </h3>
 
@@ -62,7 +62,7 @@ export default function FeatureSection() {
         </div>
 
         {/* Card 2 */}
-        <div className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-black/40 p-10 backdrop-blur-xl">
+        <div className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-black/40 p-6 md:p-10 backdrop-blur-xl">
 
           {/* Glow */}
           <div className="absolute -top-20 right-0 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl transition duration-500 group-hover:scale-125" />
@@ -75,7 +75,7 @@ export default function FeatureSection() {
 
             </div>
 
-            <h3 className="text-3xl font-semibold text-white">
+            <h3 className="text-2xl md:text-3xl font-semibold text-white">
               AI Generates Answers
             </h3>
 
@@ -106,7 +106,7 @@ export default function FeatureSection() {
         </div>
 
         {/* Card 3 Full Width */}
-        <div className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-black/40 p-10 backdrop-blur-xl lg:col-span-2">
+        <div className="group relative overflow-hidden rounded-[36px] border border-white/10 bg-black/40 p-6 md:p-10 backdrop-blur-xl lg:col-span-2">
 
           {/* Glow */}
           <div className="absolute bottom-0 right-20 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl transition duration-500 group-hover:scale-110" />
@@ -122,11 +122,11 @@ export default function FeatureSection() {
 
               </div>
 
-              <h3 className="text-4xl font-semibold text-white">
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">
                 Smart Revision Workflow
               </h3>
 
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-zinc-400">
+              <p className="mt-5 max-w-xl text-base md:text-lg leading-relaxed text-zinc-400">
                 Organize subjects, generate revision plans,
                 and quickly retrieve important concepts
                 from uploaded notes using semantic AI search.

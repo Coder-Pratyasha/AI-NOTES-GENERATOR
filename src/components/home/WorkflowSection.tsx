@@ -7,7 +7,7 @@ import {
 
 export default function WorkflowSection() {
   return (
-    <section id="workflow" className="relative flex min-h-screen items-center px-12 py-20">
+    <section id="workflow" className="relative flex min-h-screen items-center px-6 md:px-12 py-20">
 
       <div className="w-full">
 
@@ -18,13 +18,13 @@ export default function WorkflowSection() {
             Workflow
           </p>
 
-          <h2 className="text-5xl font-bold leading-tight tracking-tight text-white">
+          <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight text-white">
             From PDFs to
             <br />
             AI-generated exam notes
           </h2>
 
-          <p className="mt-5 text-lg leading-relaxed text-zinc-400">
+          <p className="mt-5 text-base md:text-lg leading-relaxed text-zinc-400">
             A seamless AI workflow designed for faster
             revision and smarter exam preparation.
           </p>
@@ -35,7 +35,7 @@ export default function WorkflowSection() {
         <div className="grid gap-6 lg:grid-cols-3">
 
           {/* Step 1 */}
-          <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-8 backdrop-blur-xl">
+          <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-6 md:p-8 backdrop-blur-xl">
 
             <div className="absolute -bottom-16 left-0 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl transition duration-500 group-hover:scale-125" />
 
@@ -51,7 +51,7 @@ export default function WorkflowSection() {
                 STEP 01
               </p>
 
-              <h3 className="text-3xl font-semibold text-white">
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">
                 Upload Notes
               </h3>
 
@@ -65,7 +65,7 @@ export default function WorkflowSection() {
           </div>
 
           {/* Step 2 */}
-          <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-8 backdrop-blur-xl">
+          <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-6 md:p-8 backdrop-blur-xl">
 
             <div className="absolute -top-16 right-0 h-56 w-56 rounded-full bg-violet-500/20 blur-3xl transition duration-500 group-hover:scale-125" />
 
@@ -81,7 +81,7 @@ export default function WorkflowSection() {
                 STEP 02
               </p>
 
-              <h3 className="text-3xl font-semibold text-white">
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">
                 AI Processing
               </h3>
 
@@ -95,7 +95,7 @@ export default function WorkflowSection() {
           </div>
 
           {/* Step 3 */}
-          <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-8 backdrop-blur-xl">
+          <div className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-6 md:p-8 backdrop-blur-xl">
 
             <div className="absolute bottom-0 right-0 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl transition duration-500 group-hover:scale-125" />
 
@@ -111,7 +111,7 @@ export default function WorkflowSection() {
                 STEP 03
               </p>
 
-              <h3 className="text-3xl font-semibold text-white">
+              <h3 className="text-2xl md:text-3xl font-semibold text-white">
                 Generate Notes
               </h3>
 

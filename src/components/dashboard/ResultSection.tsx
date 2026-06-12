@@ -29,7 +29,7 @@ const ResultSection = ({
 
     <div className="hide-scrollbar h-full overflow-y-auto pb-56">
 
-      <div className="mx-auto flex max-w-5xl flex-col space-y-10 py-4">
+      <div className="mx-auto flex max-w-5xl flex-col space-y-8 px-4 md:px-0 py-4">
 
         {messages.map(
           (message, index) => (
@@ -43,7 +43,7 @@ const ResultSection = ({
 
                 <div className="flex justify-end">
 
-                  <div className="max-w-2xl rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#2563eb]/80 via-[#1d4ed8]/70 to-[#172554]/90 px-6 py-4 text-[15px] text-white shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                  <div className="max-w-2xl md:max-w-2xl rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#2563eb]/80 via-[#1d4ed8]/70 to-[#172554]/90 px-6 py-4 text-[15px] text-white shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-xl">
 
                     {message.content}
 
@@ -59,8 +59,8 @@ const ResultSection = ({
 
                 <div className="w-full">
 
-                  <div className="rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 p-7 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
-                  <div className="mb-5 flex items-center justify-end gap-3">
+                  <div className="rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl p-4 md:p-7">
+                  <div className="mb-5 flex flex-wrap items-center justify-end gap-3">
 
                       {/* COPY BUTTON */}
 
@@ -111,7 +111,7 @@ const ResultSection = ({
 
                 <div className="w-full">
 
-                  <div className="flex w-fit items-center gap-2 rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
+                  <div className="flex max-w-full w-fit items-center gap-2 rounded-[28px] border border-blue-400/10 bg-gradient-to-br from-[#172554]/40 via-[#1e3a8a]/20 to-[#0f172a]/50 px-6 py-5 shadow-[0_4px_20px_rgba(0,0,0,0.18)] backdrop-blur-2xl">
 
                     <div className="flex items-center gap-1">
 

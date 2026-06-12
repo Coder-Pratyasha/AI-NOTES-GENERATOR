@@ -45,11 +45,10 @@ const PdfUploader = ({
 };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex w-full flex-col items-center px-4">
 
       {/* Upload Button */}
-      <label className="cursor-pointer rounded-2xl bg-blue-600 px-8 py-4 text-sm font-medium text-white transition hover:bg-blue-700">
-
+      <label className="w-full max-w-xs cursor-pointer rounded-2xl bg-blue-600 px-8 py-4 text-center text-sm font-medium text-white transition hover:bg-blue-700">
         Upload PDF
 
         {/* Hidden File Input */}
@@ -62,7 +61,7 @@ const PdfUploader = ({
 
       </label>
 
-      <p className="mt-4 text-sm text-zinc-500">
+      <p className="mt-4 text-center text-sm text-zinc-500">
         Supports PDF files up to 20MB
       </p>
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { useUser } from "@clerk/nextjs";
 
@@ -21,6 +22,9 @@ export default function DashboardPage() {
     const [currentChatId, setCurrentChatId] = useState<string | null>(null);
 
     const [selectedMode,setSelectedMode] =useState("Ask AI");
+    const searchParams = useSearchParams();
+
+    const chatId = searchParams.get("chatId");
 
   // Clerk user
   const { user } = useUser();
@@ -29,6 +33,30 @@ export default function DashboardPage() {
     user?.firstName ||
     user?.username ||
     "User";
+
+    useEffect(() => {
+
+      if (!chatId) return;
+
+      const loadChat = async () => {
+
+        const response =
+          await fetch(
+            `/api/message?chatId=${chatId}`
+          );
+
+        const data =
+          await response.json();
+
+        setCurrentChatId(chatId);
+
+        setMessages(data);
+
+      };
+
+      loadChat();
+
+    }, [chatId]);
 
   return (
     <div className="min-h-screen text-white">
@@ -43,7 +71,7 @@ export default function DashboardPage() {
       />
 
       {/* Main Content */}
-      <main className="ml-72 flex h-screen flex-col overflow-hidden px-10 py-12">
+      <main className="md:ml-72 flex h-screen flex-col overflow-hidden px-4 md:px-10 py-6 md:py-12">
 
         {/* Before Upload */}
         {!uploadedFile && messages.length === 0 ? (

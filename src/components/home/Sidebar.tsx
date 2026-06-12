@@ -9,6 +9,8 @@ import {
   LogIn,
   Rocket,
   BrainCircuit,
+  Menu,
+  X,
 } from "lucide-react";
 
 import {
@@ -17,15 +19,15 @@ import {
 } from "@clerk/nextjs";
 
 type SidebarProps = {
-  currentChatId: string | null;
+  currentChatId?: string | null;
 
-  setCurrentChatId: any;
+  setCurrentChatId?: any;
 
-  setMessages: any;
+  setMessages?: any;
 
-  userId: string | undefined;
+  userId?: string;
 
-  setUploadedFile: any;
+  setUploadedFile?: any;
 };
 
 export default function Sidebar({
@@ -37,6 +39,7 @@ export default function Sidebar({
 }: SidebarProps) {
   const [active, setActive] = useState("home");
   const [chats, setChats] = useState([]);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { isSignedIn } = useUser();
   const router = useRouter();
 
@@ -121,8 +124,32 @@ export default function Sidebar({
     }`;
 
   return (
-    <aside className="hidden md:flex fixed left-0 top-0 h-screen w-72 p-4 z-50">
-      <div className="flex flex-col w-full rounded-[32px] border border-white/10 bg-gradient-to-b from-zinc-800/80 to-zinc-900/80 backdrop-blur-xl shadow-2xl">
+    <>
+    <button onClick={() =>
+          setMobileOpen(!mobileOpen)
+        }
+        className="fixed left-4 top-4 z-[60] rounded-xl border border-white/10 bg-zinc-900/80 p-3 text-white backdrop-blur-xl md:hidden"
+      >
+        {mobileOpen ? (
+          <X className="h-5 w-5" />
+        ) : (
+          <Menu className="h-5 w-5" />
+        )}
+      </button>
+
+      {mobileOpen && (
+        <div
+          onClick={() =>
+            setMobileOpen(false)
+          }
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+        />
+      )}
+
+
+
+    <aside className={` hide-scrollbar  fixed left-0 top-0 z-50 h-screen w-[85vw] max-w-[320px] md:w-72 p-4 transform transition-transform duration-300 ${ mobileOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0  overflow-y-auto `} >
+      <div className="flex flex-col rounded-[32px] border border-white/10 bg-gradient-to-b from-zinc-800/80 to-zinc-900/80 backdrop-blur-xl shadow-2xl">
 
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-8">
@@ -177,7 +204,8 @@ export default function Sidebar({
         <nav className="flex flex-col gap-2 px-3">
 
           <Link
-            href="#home"
+            href="/"
+            onClick={() => setMobileOpen(false) }
             className={linkClass("home")}
           >
             <Home className="h-5 w-5" />
@@ -185,7 +213,8 @@ export default function Sidebar({
           </Link>
 
           <Link
-            href="#features"
+            href="/#features"
+            onClick={() => setMobileOpen(false) }
             className={linkClass("features")}
           >
             <Sparkles className="h-5 w-5" />
@@ -193,7 +222,8 @@ export default function Sidebar({
           </Link>
 
           <Link
-            href="#workflow"
+            href="/#workflow"
+            onClick={() => setMobileOpen(false) }
             className={linkClass("workflow")}
           >
             <Rocket className="h-5 w-5" />
@@ -218,6 +248,7 @@ export default function Sidebar({
           ) : (
             <Link
               href="/sign-in"
+              onClick={() => setMobileOpen(false) }
               className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-zinc-300 transition hover:bg-black/20 hover:text-white"
             >
               <LogIn className="h-5 w-5" />
@@ -231,7 +262,7 @@ export default function Sidebar({
 
 {isSignedIn && (
 
-  <div className="mt-6 flex-1 overflow-y-auto px-3">
+  <div className="mt-6 px-3">
 
     <h2 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
       Recent Chats
@@ -246,19 +277,29 @@ export default function Sidebar({
 
           onClick={async () => {
 
-            setCurrentChatId(
-              chat._id
-            );
+          setMobileOpen(false);
 
-            const response =
-              await fetch(
+            // Dashboard case
+            if (setCurrentChatId && setMessages) {
+
+              setCurrentChatId(chat._id);
+
+              const response = await fetch(
                 `/api/message?chatId=${chat._id}`
               );
 
-            const messages =
-              await response.json();
-              console.log(messages);
-            setMessages(messages);
+              const messages = await response.json();
+
+              setMessages(messages);
+
+              return;
+            }
+
+            // Home page case
+            router.push(
+              `/dashboard?chatId=${chat._id}`
+            );
+
           }}
 
           className={`w-full rounded-2xl px-4 py-3 text-left text-sm transition ${
@@ -288,7 +329,8 @@ export default function Sidebar({
           {!isSignedIn && (
             <Link
               href="/sign-up"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
+              onClick={() => setMobileOpen(false) }
+              className=" flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
             >
               <Rocket className="h-4 w-4" />
               Get Started
@@ -299,5 +341,6 @@ export default function Sidebar({
 
       </div>
     </aside>
+    </>
   );
 }
