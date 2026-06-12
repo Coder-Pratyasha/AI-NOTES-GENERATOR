@@ -1,7 +1,7 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 import { useUser } from "@clerk/nextjs";
 
@@ -22,9 +22,13 @@ export default function DashboardPage() {
     const [currentChatId, setCurrentChatId] = useState<string | null>(null);
 
     const [selectedMode,setSelectedMode] =useState("Ask AI");
-    const searchParams = useSearchParams();
+    const [chatId, setChatId] = useState<string | null>(null);
 
-    const chatId = searchParams.get("chatId");
+    useEffect(() => {
+      setChatId(
+        new URLSearchParams(window.location.search).get("chatId")
+      );
+    }, []);
 
   // Clerk user
   const { user } = useUser();
