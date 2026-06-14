@@ -1,36 +1,181 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Notes Generator
 
-## Getting Started
+An AI-powered study assistant that transforms PDF notes into intelligent, searchable, and exam-focused learning material using Retrieval-Augmented Generation (RAG).
 
-First, run the development server:
+## 🚀 Live Demo
+
+🌐 https://ai-notes-generator-n3lr.vercel.app/
+
+---
+
+## Features
+
+- 📄 Upload PDF notes and study materials
+- 🤖 Ask AI questions directly from uploaded documents
+- 🔍 Retrieval-Augmented Generation (RAG) for document-specific answers
+- 💬 ChatGPT-style conversational interface
+- 📝 **Short Notes Mode** for generating concise topic-wise notes
+- 📌 **2-Mark Answer Mode** for concise exam-oriented answers
+- 📚 **5-Mark Answer Mode** for detailed and structured explanations
+- 🎯 **Revision Mode** for quick topic summaries and last-minute preparation
+- 🤖 **Ask AI Mode** for interactive question-answering based on uploaded notes
+- 🗂️ Persistent chat history with MongoDB
+- 🔐 Secure authentication using Clerk
+- ⚡ FastAPI backend for AI processing
+- ✂️ Automatic PDF text extraction and chunking
+- 📚 Context-aware answers generated from uploaded documents
+- 🎨 Modern glassmorphism UI built with Tailwind CSS
+- 📱 Fully responsive design
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- ShadCN UI
+- Clerk Authentication
+
+### Backend
+
+- FastAPI
+- Python
+
+### AI & RAG
+
+- LangChain
+- Google Gemini API
+- RecursiveCharacterTextSplitter
+- ChromaDB Vector Store
+
+### Database
+
+- MongoDB
+
+---
+
+## Project Architecture
+
+```text
+Frontend (Next.js)
+│
+├── Clerk Authentication
+├── PDF Upload Interface
+├── Chat Interface
+└── Chat History
+        │
+        ▼
+Backend (FastAPI)
+│
+├── PDF Text Extraction
+├── Text Chunking
+├── Embedding Generation
+├── ChromaDB Storage
+└── Gemini RAG Pipeline
+        │
+        ▼
+MongoDB
+│
+├── Chats
+└── Messages
+```
+
+---
+
+## Workflow
+
+1. User signs in using Clerk Authentication.
+2. User uploads a PDF document.
+3. The backend extracts text from the PDF.
+4. Text is split into semantic chunks.
+5. Chunks are embedded and stored in ChromaDB.
+6. User asks questions related to the uploaded document.
+7. Relevant chunks are retrieved using vector similarity search.
+8. Gemini generates a context-aware response.
+9. Conversations are stored in MongoDB for future access.
+
+---
+
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Coder-Pratyasha/AI-NOTES-GENERATOR.git
+
+cd ai-notes-generator
+```
+
+### Frontend Setup
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+MONGODB_URI=
+NEXT_PUBLIC_API_URL=
+```
+
+Run the frontend:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Backend Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Navigate to the backend folder:
 
-## Learn More
+```bash
+cd python-ai-service
+```
 
-To learn more about Next.js, take a look at the following resources:
+Create a virtual environment:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+python -m venv venv
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Activate the environment:
 
-## Deploy on Vercel
+**Windows**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+venv\Scripts\activate
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Create a `.env` file:
+
+```env
+GEMINI_API_KEY=
+```
+
+Start the FastAPI server:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+## Author
+
+**Pratyasha Palit**
