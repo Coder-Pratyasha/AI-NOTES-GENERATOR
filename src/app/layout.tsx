@@ -1,6 +1,5 @@
 import "./globals.css";
 
-import Sidebar from "@/components/home/Sidebar";
 
 import AppProvider from "@/components/providers/AppProvider";
 
